@@ -1,7 +1,9 @@
 package pl.piotrdawidziuk.simplenotes;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,8 +14,6 @@ public class MainActivity extends AppCompatActivity {
 
     EditText editText;
 
-    SharedPreferences sharedPreferences;
-
     String note = "";
 
     @Override
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         editText = findViewById(R.id.editText);
 
+        note = getSavedText(getApplicationContext(),"note");
         editText.setText(note);
 
 
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
                 note = editText.getText().toString();
                 Log.i("Text:", note);
+                saveText(getApplicationContext(), "note",note);
+
             }
 
             @Override
@@ -44,5 +47,18 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    public static boolean saveText(Context context, String key, String value) {
+        SharedPreferences settings = context.getSharedPreferences("note", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(key, value);
+        return editor.commit();
+    }
+
+    public static String getSavedText(Context context, String key) {
+        SharedPreferences settings = context.getSharedPreferences("note", Context.MODE_PRIVATE);
+        return settings.getString(key, "Write here");
     }
 }
