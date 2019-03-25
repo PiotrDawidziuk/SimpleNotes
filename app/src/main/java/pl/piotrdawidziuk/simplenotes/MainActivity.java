@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.datetime:
-                Toast.makeText(this, "MENU CLICKED", Toast.LENGTH_SHORT).show();
                 date = new Date();
                 editText.append("\n"+date+"\n");
                 return true;
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 editText.setText("");
+                                Toast.makeText(MainActivity.this, "Notes cleared", Toast.LENGTH_SHORT).show();
                                 dialog.cancel();
                             }
                         });
@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 note = editText.getText().toString();
-                Log.i("Text:", note);
                 saveText(getApplicationContext(), "note",note);
 
             }
