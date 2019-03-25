@@ -13,10 +13,13 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText editText;
     String note = "";
+    Date date;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -32,7 +35,12 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.datetime:
                 Toast.makeText(this, "MENU CLICKED", Toast.LENGTH_SHORT).show();
+                date = new Date();
+                editText.append("\n"+date+"\n");
+                return true;
 
+            case R.id.clear:
+                editText.setText("");
                 return true;
 
             default:
@@ -46,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         editText = findViewById(R.id.editText);
+        date = new Date();
 
         note = getSavedText(getApplicationContext(),"note");
         editText.setText(note);
