@@ -1,8 +1,11 @@
 package pl.piotrdawidziuk.simplenotes;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     String note = "";
     Date date;
+
+    AlertDialog.Builder builder;
+    AlertDialog dialog;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,8 +46,39 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.clear:
-                editText.setText("");
+
+                builder = new AlertDialog.Builder(this);
+                builder.setTitle("Clear");
+                builder.setMessage("Do you want to clear all?");
+                builder.setCancelable(true);
+
+                builder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                editText.setText("");
+                                dialog.cancel();
+                            }
+                        });
+
+                builder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert = builder.create();
+                alert.show();
                 return true;
+
+                case R.id.exit:
+                    Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                    homeIntent.addCategory( Intent.CATEGORY_HOME );
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(homeIntent);
+                    return true;
 
             default:
                 return false;

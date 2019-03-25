@@ -3,6 +3,7 @@
 
     <item android:title="Date and time" android:id="@+id/datetime"></item>
     <item android:title="Clear" android:id="@+id/clear"></item>
+    <item android:title="Exit" android:id="@+id/exit"></item>
 
 
 </menu>
