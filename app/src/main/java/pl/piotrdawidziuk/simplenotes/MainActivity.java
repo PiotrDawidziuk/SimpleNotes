@@ -9,18 +9,22 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText editText;
     String note = "";
+    String dateAndTimeString = "";
+
     Date date;
 
     AlertDialog.Builder builder;
@@ -40,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.datetime:
                 date = new Date();
-                editText.append("\n"+date+"\n");
+                dateAndTimeString = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss").format(date);
+                editText.append("\n"+dateAndTimeString+"\n");
                 return true;
 
             case R.id.clear:
@@ -90,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         editText = findViewById(R.id.editText);
-        date = new Date();
 
         note = getSavedText(getApplicationContext(),"note");
         editText.setText(note);
